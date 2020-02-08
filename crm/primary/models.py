@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -43,3 +43,8 @@ class Job(models.Model):
     is_complete = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now_add=True)
     date_completed = models.DateTimeField(default=None, null=True)
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    date_posted = models.DateTimeField(auto_now=True)
