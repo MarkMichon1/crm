@@ -1,4 +1,44 @@
 {% extends 'primary/primary_template.html' %}
 {% block content %}
-    home
+    <div class="container mt-5 mb-5">
+        <div class="card text-center">
+            <div class="card-header bg-warning">
+                <h4>Reset Demo State</h4>
+            </div>
+            <div class="card-body">
+                Want to reset the state of the demo?  This will purge all user-created objects and populate everything
+                with preset sample data.
+                <p><button type="button" class="btn btn-outline-warning mt-4" data-toggle="modal" data-target="#resetModal">
+                    Reset
+                </button></p>
+            </div>
+        </div>
+    </div>
+    {% if user.is_authenticated %}
+        logged in metrics
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Please log in to access application!
+        </div>
+    {% endif %}
+    <!-- Modal -->
+    <div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Reset State?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you wish to reset application state?  This can't be undone!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger" href="{% url 'primary-reset-state' %}" role="button">Reset State</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

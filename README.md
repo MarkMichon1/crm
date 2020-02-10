@@ -1,1 +1,4 @@
-More to be added soon!
+# CRM Demo Application
+
+* Authentication
+* Pagination
