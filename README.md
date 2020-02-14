@@ -2,3 +2,4 @@
 
 * Authentication
 * Pagination
+* 404 pages

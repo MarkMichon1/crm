@@ -1,4 +1,31 @@
 {% extends 'primary/primary_template.html' %}
 {% block content %}
-    customer
+    <h1>Customer Data- think of a better system for this</h1>
+    <div class="list-group mt-5">
+        <a href="{% url 'primary-customer-update' object.id %}" class="list-group-item list-group-item-action mx-auto
+        list-group-item-info font-weight-bold text-center" style="width: 200px;">Edit Customer Information</a>
+        <a href="{% url 'primary-customer-delete' object.id %}" class="list-group-item list-group-item-action mx-auto
+        list-group-item-danger font-weight-bold text-center" style="width: 200px;">Remove Customer</a>
+    </div>
+    <table class="table table-striped mt-5">
+        <tbody>
+            <tr>
+                <th scope="row">Name</th>
+                <td>{{ object.first_name }}  {{ object.last_name }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Phone Number</th>
+                <td>{{ object.phone_number|slice:":3" }}-{{ object.phone_number|slice:"3:6" }}-{{ object.phone_number|slice:"6:10" }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Address</th>
+                <td><p>{{ object.street_address }}</p>
+                <p>{{ object.city }}, {{ object.state }} {{ object.zip_code }}</p></td>
+            </tr>
+            <tr>
+                <th scope="row">Lifetime Customer Value</th>
+                <td>$tba</td>
+            </tr>
+        </tbody>
+    </table>
 {% endblock %}

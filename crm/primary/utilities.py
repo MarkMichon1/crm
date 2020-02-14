@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 
-from .models import Comment, Customer, Job, Technician
+from .models import Customer, CustomerComment, Job, JobComment, Technician, TechnicianComment
 
 def reset_app_sample_state():
     '''This resets the state of the application, removing models and repopulating the tables with sample data.  Used
@@ -8,9 +8,12 @@ def reset_app_sample_state():
 
     # Refresh User object data
     User.objects.all().delete()
-    user_data_list = [
-        []
-    ]
+    demo_user = User(first_name='Test', last_name='User', username='TestUser')
+    demo_user.set_password('testPassword12321')
+    demo_user.save()
+    # user_data_list = [ todo
+    #     []
+    # ]
 
     # Refresh Customer object data
     Customer.objects.all().delete()
@@ -32,5 +35,6 @@ def reset_app_sample_state():
     ]
     for customer in customer_data_list:
         new_customer = Customer(first_name=customer[0], last_name=customer[1], street_address=customer[2],
-                                city=customer[3], state=customer[4], zip_code=customer[5], phone_number=customer[6])
+                                city=customer[3], state=customer[4], zip_code=customer[5], phone_number=customer[6],
+                                author=demo_user)
         new_customer.save()
