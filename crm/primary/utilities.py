@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 
-from .models import Customer, CustomerComment, Job, JobComment, Technician, TechnicianComment
+from .models import Customer, Job, Technician
 
 def reset_app_sample_state():
     '''This resets the state of the application, removing models and repopulating the tables with sample data.  Used

@@ -1,0 +1,20 @@
+{% extends 'primary/primary_template.html' %}
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <form method ='POST'>
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">
+                        Delete Technician?
+                    </legend>
+                    <h2>Are you sure you wish to remove {{ object.first_name }} {{ object.last_name }}?</h2>
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-danger" type="submit">Confirm Deletion</button>
+                    <a class="btn btn-outline-secondary" href="{% url 'primary-customer' object.id %}">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

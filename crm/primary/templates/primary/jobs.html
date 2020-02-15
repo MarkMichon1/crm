@@ -1,4 +1,70 @@
 {% extends 'primary/primary_template.html' %}
 {% block content %}
-    jobs {{ post.author.profile.image.url }} in img srg for posts
+    <h1 class="mb-5 mt-5 text-center">Pending and Completed Jobs</h1>
+    <div class="list-group mb-5">
+        <a href="{% url 'primary-job-create' %}" class="list-group-item list-group-item-action mx-auto
+        list-group-item-success font-weight-bold text-center" style="width: 200px;">Add New Job</a>
+    </div>
+    {% if jobs %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Phone #</th>
+                <th scope="col">Street</th>
+                <th scope="col">City</th>
+                <th scope="col">State</th>
+                <th scope="col">Zip</th>
+                <th scope="col">Cost of Job</th>
+                <th scope="col">Date Added</th>
+                <th scope="col">Complete?</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for job in jobs %}
+                {% if job.is_complete %}
+                    <tr class="table-primary">
+                {% else %}
+                    <tr>
+                {% endif %}
+                    <td class="font-weight-bold"><a href="{% url 'primary-job' job.id %}">{{ job.customer.first_name }}  {{ job.customer.last_name }}</a></td>
+                    <td>{{ job.customer.phone_number|slice:":3" }}-{{ job.customer.phone_number|slice:"3:6" }}-{{ job.customer.phone_number|slice:"6:10" }}</td>
+                    <td>{{ job.customer.street_address }}</td>
+                    <td>{{ job.customer.city }}</td>
+                    <td>{{ job.customer.state }}</td>
+                    <td>{{ job.customer.zip_code }}</td>
+                    <td class="font-weight-bold">${{ job.cost_of_job }}</td>
+                    <td>{{ job.date_added }}</td>
+                    {% if job.is_complete %}
+                        <td class="font-weight-bold">Yes</td>
+                    {% else %}
+                        <td>No</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+            {% if is_paginated %}
+                {% if page_obj.has_previous %}
+                    <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+                {% for number in page_obj.paginator.page_range %}
+                    {% if page_obj.number == number %}
+                        <a class="btn btn-info mb-4" href="?page={{ number }}">{{ number }}</a>
+                    {% elif number > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a class="btn btn-outline-info mb-4" href="?page={{ number }}">{{ number }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                {% endif %}
+            {% endif %}
+        </table>
+    {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            No jobs (yet), use the button above to add one.
+        </div>
+    {% endif %}
 {% endblock %}

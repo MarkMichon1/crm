@@ -1,4 +1,36 @@
 {% extends 'primary/primary_template.html' %}
 {% block content %}
-    technician
+    <h1>Technician - {{ object.first_name }} {{ object.last_name }}</h1>
+    <div class="text-muted">Added by {{ object.author.username }} at {{ object.date_added}}</div>
+    <div class="list-group mt-5">
+        <a href="{% url 'primary-technician-update' object.id %}" class="list-group-item list-group-item-action mx-auto
+        list-group-item-info font-weight-bold text-center" style="width: 200px;">Edit Technician Information</a>
+        <a href="{% url 'primary-technician-delete' object.id %}" class="list-group-item list-group-item-action mx-auto
+        list-group-item-danger font-weight-bold text-center" style="width: 200px;">Remove Technician</a>
+    </div>
+    <table class="table table-striped mt-5">
+        <tbody>
+            <tr>
+                <th scope="row">Name</th>
+                <td>{{ object.first_name }}  {{ object.last_name }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Phone Number</th>
+                <td>{{ object.phone_number|slice:":3" }}-{{ object.phone_number|slice:"3:6" }}-{{ object.phone_number|slice:"6:10" }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Address</th>
+                <td><p>{{ object.street_address }}</p>
+                <p>{{ object.city }}, {{ object.state }} {{ object.zip_code }}</p></td>
+            </tr>
+            <tr>
+                <th scope="row">Currently Employed?</th>
+                {% if object.is_active %}
+                    <td>Yes</td>
+                {% else %}
+                    <td>No</td>
+                {% endif %}
+            </tr>
+        </tbody>
+    </table>
 {% endblock %}

@@ -1,5 +1,6 @@
 {% extends 'primary/primary_template.html' %}
 {% block content %}
+    <h1 class="mb-5 mt-5 text-center">Customer List</h1>
     <div class="list-group mb-5">
         <a href="{% url 'primary-customer-create' %}" class="list-group-item list-group-item-action mx-auto
         list-group-item-success font-weight-bold text-center" style="width: 200px;">Add New Customer</a>
@@ -28,8 +29,28 @@
                 </tr>
             {% endfor %}
             </tbody>
+            {% if is_paginated %}
+                {% if page_obj.has_previous %}
+                    <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+                {% for number in page_obj.paginator.page_range %}
+                    {% if page_obj.number == number %}
+                        <a class="btn btn-info mb-4" href="?page={{ number }}">{{ number }}</a>
+                    {% elif number > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a class="btn btn-outline-info mb-4" href="?page={{ number }}">{{ number }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                {% endif %}
+            {% endif %}
         </table>
     {% else %}
-        none yet todo
+        <div class="alert alert-info text-center" role="alert">
+            No customers (yet), use the button above to add one.
+        </div>
     {% endif %}
 {% endblock %}

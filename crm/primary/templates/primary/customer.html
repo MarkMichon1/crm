@@ -1,6 +1,7 @@
 {% extends 'primary/primary_template.html' %}
 {% block content %}
-    <h1>Customer Data- think of a better system for this</h1>
+    <h1>Customer - {{ object.first_name }} {{ object.last_name }}</h1>
+    <div class="text-muted">Added by {{ object.author.username }} at {{ object.date_added}}</div>
     <div class="list-group mt-5">
         <a href="{% url 'primary-customer-update' object.id %}" class="list-group-item list-group-item-action mx-auto
         list-group-item-info font-weight-bold text-center" style="width: 200px;">Edit Customer Information</a>
@@ -24,7 +25,7 @@
             </tr>
             <tr>
                 <th scope="row">Lifetime Customer Value</th>
-                <td>$tba</td>
+                <td>${{ object.lifetime_value }}</td>
             </tr>
         </tbody>
     </table>

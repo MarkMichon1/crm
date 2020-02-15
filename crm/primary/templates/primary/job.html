@@ -1,4 +1,60 @@
 {% extends 'primary/primary_template.html' %}
 {% block content %}
-    job
+    <h1>Job - {{ object.customer.first_name }} {{ object.customer.last_name }}</h1>
+    <div class="text-muted">Added by {{ object.author.username }} at {{ object.date_added}}</div>
+    <div class="list-group mt-5">
+        <a href="{% url 'primary-job-update' object.id %}" class="list-group-item list-group-item-action mx-auto
+        list-group-item-info font-weight-bold text-center" style="width: 200px;">Edit Job Information</a>
+        <a href="{% url 'primary-job-delete' object.id %}" class="list-group-item list-group-item-action mx-auto
+        list-group-item-danger font-weight-bold text-center" style="width: 200px;">Remove Job</a>
+    </div>
+    <table class="table table-striped mt-5">
+        <tbody>
+            <tr>
+                <th scope="row">Name</th>
+                <td><a href="{% url 'primary-customer' object.customer.id %}" class="font-weight-bold">{{ object.customer.first_name }}  {{ object.customer.last_name }}</a></td>
+            </tr>
+            <tr>
+                <th scope="row">Phone Number</th>
+                <td>{{ object.customer.phone_number|slice:":3" }}-{{ object.customer.phone_number|slice:"3:6" }}-{{ object.customer.phone_number|slice:"6:10" }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Address</th>
+                <td><p>{{ object.customer.street_address }}</p>
+                <p>{{ object.customer.city }}, {{ object.customer.state }} {{ object.customer.zip_code }}</p></td>
+            </tr>
+            <tr>
+                <th scope="row">Job Complete?</th>
+                {% if object.is_complete %}
+                    <td>Yes</td>
+                {% else %}
+                    <td>No</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th scope="row">Cost of Job</th>
+                <td class="font-weight-bold">${{ object.cost_of_job }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Technicians Who Performed Job</th>
+                {% if object.technicians.all %}
+                    <td>
+                    {% for technician in object.technicians.all %}
+                        {% if technician.is_active %}
+                            <a href="{% url 'primary-technician' technician.id %}" class="badge badge-pill badge-primary">{{ technician.first_name }} {{ technician.last_name }}</a>
+                        {% else %}
+                            <a href="{% url 'primary-technician' technician.id %}" class="badge badge-pill badge-secondary">{{ technician.first_name }} {{ technician.last_name }} (Inactive)</a>
+                        {% endif %}
+                    {% endfor %}
+                    </td>
+                {% else %}
+                    <td class="text-muted">None Added</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th scope="row">Work Notes</th>
+                <td>{{ object.job_details }}</td>
+            </tr>
+        </tbody>
+    </table>
 {% endblock %}

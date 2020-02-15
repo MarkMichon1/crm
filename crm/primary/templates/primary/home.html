@@ -15,7 +15,66 @@
         </div>
     </div>
     {% if user.is_authenticated %}
-        logged in metrics
+        <div class="container text-center mt-5 mb-5">
+            <h1>Overview</h1>
+            <div class="row">
+                <div class="col">
+                    <div class="card mb-5 mt-5">
+                        <div class="card-body bg-success">
+                            <h3>{{ pending_jobs }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h4>Pending Jobs</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col xs-3">
+                </div>
+                <div class="col">
+                    <div class="card mb-5 mt-5">
+                        <div class="card-body bg-success">
+                            <h3>{{ total_customers }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h4>Total Customers</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="card mb-5 mt-5">
+                        <div class="card-body bg-info">
+                            <h3>{{ completed_jobs }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h4>Completed Jobs</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col xs-3">
+                </div>
+                <div class="col">
+                    <div class="card mb-5 mt-5">
+                        <div class="card-body bg-light">
+                            <h3>{{ employed_technicians }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h4>Employed Technicians</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     {% else %}
         <div class="alert alert-info" role="alert">
             Please log in to access application!
