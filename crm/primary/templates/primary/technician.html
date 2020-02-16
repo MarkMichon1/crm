@@ -33,4 +33,50 @@
             </tr>
         </tbody>
     </table>
+    {% if object.jobs.all %}
+        {% if object.jobs.all|length == 1 %}
+            <h1 class="mb-5 mt-5">{{ object.jobs.all|length }} Job on File</h1>
+        {% else %}
+            <h1 class="mb-5 mt-5">{{ object.jobs.all|length }} Jobs on File</h1>
+        {% endif %}
+        <table class="table table-striped mt-5 mb-5">
+            <thead>
+                <tr>
+                    <th scope="col">Customer</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Date Added</th>
+                    <th scope="col">Job Total</th>
+                    <th scope="col">Is Complete?</th>
+                    <th scope="col">Date Completed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in object.jobs.all %}
+                    <tr>
+                        <th scope="row"><a href="{% url 'primary-job' job.id %}">{{ job.customer.first_name }} {{ job.customer.last_name }}</a></th>
+                        <td><p>{{ job.customer.street_address }}</p>
+                            <p>{{ job.customer.city }}, {{ job.customer.state }} {{ job.customer.zip_code }}</p>
+                        </td>
+                        <td>{{ job.date_added }}</td>
+                        <td>${{ job.cost_of_job }}</td>
+                        {% if job.is_complete %}
+                            <td>Yes</td>
+                            {% if job.date_completed %}
+                                <td>{{ job.date_completed }}</td>
+                            {% else %}
+                                <td class="text-muted">None Entered</td>
+                            {% endif %}
+                        {% else %}
+                            <td>No</td>
+                            <td class="text-muted">N/A</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info text-center mb-5" role="alert">
+            This employee has not performed any jobs yet.
+        </div>
+    {% endif %}
 {% endblock %}

@@ -15,6 +15,8 @@
                 <th scope="col">City</th>
                 <th scope="col">State</th>
                 <th scope="col">Zip</th>
+                <th scope="col">Lifetime Value</th>
+                <th scope="col">Number of Jobs Completed</th>
             </tr>
             </thead>
             <tbody>
@@ -26,6 +28,16 @@
                     <td>{{ customer.city }}</td>
                     <td>{{ customer.state }}</td>
                     <td>{{ customer.zip_code }}</td>
+                    {% if customer.lifetime_value == 0 %}
+                        <td class="text-muted">$0.00</td>
+                    {% else %}
+                        <td class="font-weight-bold">${{ customer.lifetime_value }}</td>
+                    {% endif %}
+                    {% if customer.jobs.all|length == 0 %}
+                        <td class="text-muted">{{ customer.jobs.all|length }}</td>
+                    {% else %}
+                        <td class="font-weight-bold">{{ customer.jobs.all|length }}</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
