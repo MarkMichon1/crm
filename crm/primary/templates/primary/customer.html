@@ -25,7 +25,11 @@
             </tr>
             <tr>
                 <th scope="row">Lifetime Customer Value</th>
-                <td>${{ object.lifetime_value }}</td>
+                {% if object.lifetime_value == 0 %}
+                    <td class="text-muted">$0.00</td>
+                {% else %}
+                    <td>${{ object.lifetime_value }}</td>
+                {% endif %}
             </tr>
         </tbody>
     </table>
@@ -66,7 +70,7 @@
             </tbody>
         </table>
     {% else %}
-        <div class="alert alert-info text-center mb-5" role="alert">
+        <div class="alert alert-info text-center mb-5 mt-5" role="alert">
             No jobs have been done for this customer yet.
         </div>
     {% endif %}

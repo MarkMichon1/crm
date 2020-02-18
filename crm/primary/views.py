@@ -27,7 +27,7 @@ class JobListView(LoginRequiredMixin, ListView):
     extra_context = {
         'title': 'Jobs'
     }
-    paginate_by = 10
+    paginate_by = 25
 
 
 class JobDetailView(LoginRequiredMixin, DetailView):
@@ -80,8 +80,8 @@ class CustomerListView(LoginRequiredMixin, ListView):
     extra_context = {
         'title': 'Customers'
     }
-    ordering = ['last_name', 'first_name'] #todo check
-    paginate_by = 10
+    ordering = ['last_name', 'first_name', 'city']
+    paginate_by = 25
 
 
 class CustomerDetailView(LoginRequiredMixin, DetailView):
@@ -134,8 +134,8 @@ class TechnicianListView(LoginRequiredMixin, ListView):
     extra_context = {
         'title': 'Technicians'
     }
-    ordering = ['last_name', 'first_name']
-    paginate_by = 10
+    ordering = ['last_name', 'first_name', 'city']
+    paginate_by = 25
 
 
 class TechnicianDetailView(LoginRequiredMixin, DetailView):
@@ -184,5 +184,6 @@ class TechnicianDeleteView(LoginRequiredMixin, DeleteView):
 
 def reset_state(request):
     reset_app_sample_state()
-    messages.success(request, 'Application state successfully reset!')
+    messages.success(request, 'Application state successfully reset!  Register an account and log in, sample data has'
+                              ' been generated.')
     return redirect('primary-home')

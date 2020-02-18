@@ -5,12 +5,30 @@
         <a href="{% url 'primary-technician-create' %}" class="list-group-item list-group-item-action mx-auto
         list-group-item-success font-weight-bold text-center" style="width: 200px;">Add New Technician</a>
     </div>
+    {% if is_paginated %}
+        {% if page_obj.has_previous %}
+            <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+    {% endif %}
     {% if technicians %}
         <table class="table table-striped">
             <thead>
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Phone #</th>
+                <th scope="col">Email</th>
                 <th scope="col">Street</th>
                 <th scope="col">City</th>
                 <th scope="col">State</th>
@@ -19,41 +37,24 @@
             </thead>
             <tbody>
             {% for technician in technicians %}
-                    {% if technician.is_active %}
-                        <tr>
+                {% if technician.is_active %}
+                    <tr>
                         <td><a href="{% url 'primary-technician' technician.id %}" class="font-weight-bold">
-                        {{ technician.first_name }}  {{ technician.last_name }}</a></td>
-                    {% else %}
-                        <tr class="text-muted">
-                        <td><a href="{% url 'primary-technician' technician.id %}">
+                            {{ technician.first_name }}  {{ technician.last_name }}</a></td>
+                        {% else %}
+                    <tr class="text-muted">
+                    <td><a href="{% url 'primary-technician' technician.id %}">
                         {{ technician.first_name }}  {{ technician.last_name }} (Inactive)</a></td>
-                    {% endif %}
-                    <td>{{ technician.phone_number|slice:":3" }}-{{ technician.phone_number|slice:"3:6" }}-{{ technician.phone_number|slice:"6:10" }}</td>
-                    <td>{{ technician.street_address }}</td>
-                    <td>{{ technician.city }}</td>
-                    <td>{{ technician.state }}</td>
-                    <td>{{ technician.zip_code }}</td>
-                </tr>
+                {% endif %}
+            <td>{{ technician.phone_number|slice:":3" }}-{{ technician.phone_number|slice:"3:6" }}-{{ technician.phone_number|slice:"6:10" }}</td>
+            <td>{{ technician.email }}</td>
+            <td>{{ technician.street_address }}</td>
+            <td>{{ technician.city }}</td>
+            <td>{{ technician.state }}</td>
+            <td>{{ technician.zip_code }}</td>
+            </tr>
             {% endfor %}
             </tbody>
-            {% if is_paginated %}
-                {% if page_obj.has_previous %}
-                    <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-                {% endif %}
-                {% for number in page_obj.paginator.page_range %}
-                    {% if page_obj.number == number %}
-                        <a class="btn btn-info mb-4" href="?page={{ number }}">{{ number }}</a>
-                    {% elif number > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                        <a class="btn btn-outline-info mb-4" href="?page={{ number }}">{{ number }}</a>
-                    {% endif %}
-                {% endfor %}
-
-                {% if page_obj.has_next %}
-                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-                {% endif %}
-            {% endif %}
         </table>
     {% else %}
         <div class="alert alert-info text-center" role="alert">

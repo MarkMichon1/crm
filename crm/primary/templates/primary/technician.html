@@ -24,6 +24,10 @@
                 <p>{{ object.city }}, {{ object.state }} {{ object.zip_code }}</p></td>
             </tr>
             <tr>
+                <th scope="row">Email</th>
+                <td>{{ object.email }}</td>
+            </tr>
+            <tr>
                 <th scope="row">Currently Employed?</th>
                 {% if object.is_active %}
                     <td>Yes</td>
@@ -75,7 +79,7 @@
             </tbody>
         </table>
     {% else %}
-        <div class="alert alert-info text-center mb-5" role="alert">
+        <div class="alert alert-info text-center mb-5 mt-5" role="alert">
             This employee has not performed any jobs yet.
         </div>
     {% endif %}
